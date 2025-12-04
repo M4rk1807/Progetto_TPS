@@ -1,0 +1,32 @@
+{
+    "Utenti":[
+        {
+            "nome":"Mario Rossi",
+            "password":"mario1234"
+        },
+        {
+            "nome":"Luca Bianchi",
+            "password":"luca1234"
+        },
+        {
+            "nome":"Giovanni Verdi",
+            "password":"giovanni1234"
+        },
+        {
+            "nome":"Lucia Neri",
+            "password":"lucia1234"
+        },
+        {
+            "nome":"Toni Gialli",
+            "password":"toni1234"
+        },
+        {
+            "nome":"Paolo Blu",
+            "password":"paolo1234"
+        },
+    {
+            "nome":"Maria Rosa",
+            "password":"maria1234"
+        }
+    ]
+}
