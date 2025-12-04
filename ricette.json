@@ -30,6 +30,7 @@
         {
         "id":"Ricetta 2",
         "titolo":"Risotto ai funghi porcini",
+        "immagine":"immagini/risotto-ai-funghi.jpg",
         "descrizione":"Piatto saporito perfetto per l'autunno",
         "tempo_preparazione":"30 minuti",
         "porzioni":4,
@@ -54,6 +55,7 @@
         {
         "id": "Ricetta 3",
         "titolo": "Pollo alla Cacciatora",
+        "immagine":"immagini/pollo-alla-cacciatora.jpg",
         "descrizione": "Un piatto tradizionale italiano, ricco di sapore, che combina pollo, pomodori, olive e aromi.",
         "tempo_preparazione": "1 ora",
         "porzioni": 4,
@@ -81,6 +83,7 @@
         {
             "id": "Ricetta 4",
             "titolo": "Salmone al Forno con Erbe",
+            "immagine":"immagini/salmone-al-forno.jpg",
             "descrizione": "Un piatto di pesce semplice ma saporito, con il salmone cotto al forno e arricchito con erbe aromatiche.",
             "tempo_preparazione": "30 minuti",
             "porzioni": 4,
@@ -105,6 +108,7 @@
         {
             "id": "Ricetta 5",
             "titolo": "Tiramisù",
+            "immagine":"immagini/tiramisu.jpg",
             "descrizione": "Un classico dolce italiano a base di mascarpone, caffè e savoiardi, perfetto per ogni occasione speciale.",
             "tempo_preparazione": "40 minuti + riposo in frigo",
             "porzioni": 6,
