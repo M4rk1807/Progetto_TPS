@@ -17,7 +17,10 @@ Breve sito che funge da ricettario: permette di consultare ricette, cercare per 
 ## Struttura del progetto
 - [index.html](index.html) — pagina principale.
 - [style.css](style.css) — stili globali.
-- (opzionale) ricette.json — file JSON con l'elenco delle ricette.
+- ricette.json — file JSON con l'elenco delle ricette.
+- utenti.json — file JSON con l'elenco degli utenti.
+- immagini/ — cartella con le immagini delle ricette.
+
 
 ## Come usare
 1. Apri [index.html](index.html) nel browser.
@@ -25,6 +28,6 @@ Breve sito che funge da ricettario: permette di consultare ricette, cercare per 
 3. Clicca sul pulsante "Ricetta casuale" per visualizzare una ricetta scelta a caso.
 
 ## Contribuire
-- Aggiungi/Modifica ricette nel file JSON (se presente).
+- Aggiungi/Modifica ricette nel file JSON.
 - Implementa nuove funzionalità JavaScript migliorando la UI o i filtri.
 
