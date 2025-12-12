@@ -1,42 +1,80 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accesso</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricette</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-  <div class="container">
-    <h1 id="form-title">Accesso</h1>
+    <label>cerca ricetta</label>
+    <div id="ricerca">
+    <input type="text" id="cercaTesto" placeholder="Cerca una ricetta...">
+    <button id="btnCerca">Cerca</button>
+    </div>
 
-    <form id="login-form" onsubmit="handleLogin(event)">
-      <label for="login-email">Email:</label>
-      <input type="email" id="login-email" required>
 
-      <label for="login-password">Password:</label>
-      <input type="password" id="login-password" required>
+    <div id="output">
+        <div id="testo"></div>
+        <div id="immagini"></div>
+    </div>
 
-      <button type="submit">Accedi</button>
-    </form>
-  </div>
 
-  <script>
-    const existingEmails = ["test@email.com", "mario.rossi@email.com"];
+<script>
+async function carica() {
 
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById("login-email").value.trim().toLowerCase();
-      const password = document.getElementById("login-password").value;
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    const ricette = dati.ricette;
 
-      if (!existingEmails.includes(email)) {
-        alert("Email non registrata. Contatta l'amministratore.");
-        return;
-      }
+    let htmlOutput = "";
+    let imgs = [];
+    let immagini = "";
+    let nuovo = [];
 
-      alert("Accesso effettuato!");
-      window.location.href = "index.html";
+    
+
+    for (let i = 0; i < ricette.length; i++) {
+        htmlOutput += `
+            <p>id: ${ricette[i].id}</p>
+            <p>titolo: ${ricette[i].titolo}</p>
+            <p>descrizione: ${ricette[i].descrizione}</p>
+            <p>tempo: ${ricette[i].tempo_preparazione}</p>
+            <p>porzioni: ${ricette[i].porzioni}</p>
+            <p>ingredienti: ${ricette[i].ingredienti}</p>
+            <p>preparazione: ${ricette[i].preparazione}</p>
+            <hr>
+        `;
+        imgs[i] = ricette[i].immagine;
     }
-  </script>
+
+    for(let i = 0; i < imgs.length; i++) {
+        immagini += `
+            <img src="${imgs[i]}">       
+        `;
+    }
+
+    document.getElementById("immagini").innerHTML = immagini;
+    document.getElementById("testo").innerHTML = htmlOutput;
+}
+
+
+    let valore = document.getElementById("text");
+
+ btnCerca.addEventListener("click", async () => {
+        for(let i = 0; i < ricette.length; i++) {
+        if(ricette[i].titolo === valore){
+            console.log("${ricette[i].descrizione}")
+        }
+    }
+    });
+
+carica();
+</script>
+
 </body>
 </html>
+
+
+
