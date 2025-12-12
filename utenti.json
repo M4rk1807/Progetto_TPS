@@ -1,31 +1,31 @@
 {
     "Utenti":[
         {
-            "nome":"Mario Rossi",
+            "email":"mariotomail@gmail.com",
             "password":"mario1234"
         },
         {
-            "nome":"Luca Bianchi",
+            "email":"lucatomail@gmail.com",
             "password":"luca1234"
         },
         {
-            "nome":"Giovanni Verdi",
+            "email":"giovannitomail@gmail.com",
             "password":"giovanni1234"
         },
         {
-            "nome":"Lucia Neri",
+            "email":"luciatomail@gmail.com",
             "password":"lucia1234"
         },
         {
-            "nome":"Toni Gialli",
+            "email":"tonitomail@gmail.com",
             "password":"toni1234"
         },
         {
-            "nome":"Paolo Blu",
+            "email":"paolotomail@gmail.com",
             "password":"paolo1234"
         },
     {
-            "nome":"Maria Rosa",
+            "email":"mariarosatomail@gmail.com",
             "password":"maria1234"
         }
     ]

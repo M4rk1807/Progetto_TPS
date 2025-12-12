@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricette</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesso</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <div class="container">
+    <h1 id="form-title">Accesso</h1>
+
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <label for="login-email">Email:</label>
+      <input type="email" id="login-email" required>
+
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" required>
+
+      <button type="submit">Accedi</button>
+    </form>
+  </div>
+
+  <script>
+    const existingEmails = ["test@email.com", "mario.rossi@email.com"];
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById("login-email").value.trim().toLowerCase();
+      const password = document.getElementById("login-password").value;
+
+      if (!existingEmails.includes(email)) {
+        alert("Email non registrata. Contatta l'amministratore.");
+        return;
+      }
+
+      alert("Accesso effettuato!");
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
