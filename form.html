@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accesso</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -17,49 +17,50 @@
       <label for="login-password">Password:</label>
       <input type="password" id="login-password" required>
 
-      <button id="processBtn", type="submit">Accedi</button>
+      <button id="processBtn" type="submit">Accedi</button>
     </form>
+    <p id="message"></p>
   </div>
 
-  <script>
+<script>
+async function handleLogin(event) {
+    event.preventDefault(); // evita il refresh della pagina
 
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById("login-email").value.trim().toLowerCase();
-      const password = document.getElementById("login-password").value;
+    const email = document.getElementById("login-email").value.trim().toLowerCase();
+    const password = document.getElementById("login-password").value;
 
+    try {
+        const risposta = await fetch('utenti.json');
+        const dati = await risposta.json();
+        const utenti = dati.utenti;
 
-        processBtn=document.getElementById("processBtn");
-        processBtn.addEventListener("click", async () => {
-            const risposta= await fetch ('utenti.json');
-            const dati=await risposta.json();
-            const utenti = dati.utenti;
-            let valore = document.getElementById("text").value;
+        let trovato = false;
 
-
-            let htmlOutput = ""; 
-
-            for (let i = 0; i < utenti.length; i++) {
-                if(utenti[i].email.toLowerCase() === email && utenti[i].password === password){
-                    htmlOutput ="Accesso effettuato!";
-                    window.location.href = "index.html";
-                break;}
-                else{
-                    htmlOutput ="Email non registrata. Contatta l'amministratore.";
-                }
+        for (let i = 0; i < utenti.length; i++) {
+            if (utenti[i].email.toLowerCase() === email && utenti[i].password === password) {
+                trovato = true;
+                break;
             }
-            document.getElementById("output").innerHTML = htmlOutput
+        }
 
-        });
+        const message = document.getElementById("message");
+
+        if (trovato) {
+            message.style.color = "green";
+            message.textContent = "Accesso effettuato! Reindirizzamento...";
+            // redirect dopo 1 secondo
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
+        } else {
+            message.style.color = "red";
+            message.textContent = "Email o password non corretti. Contatta l'amministratore.";
+        }
+
+    } catch (error) {
+        console.error("Errore nel caricamento del file JSON:", error);
     }
-
-    function showForm(type) {
-      document.getElementById("form-title").textContent = type === "register" ? "Registrazione" : "Accesso";
-      document.getElementById("register-form").classList.toggle("hidden", type !== "register");
-      document.getElementById("login-form").classList.toggle("hidden", type !== "login");
-    }
-    
-
-  </script>
+}
+</script>
 </body>
 </html>

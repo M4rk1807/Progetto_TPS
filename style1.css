@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+/* Contenitore principale con due colonne */
+#output {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Colonna testo */
+#testo {
+    flex: 2;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Colonna immagini */
+#immagini {
+    flex: 1;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Stile testo */
+#testo p {
+    margin: 5px 0;
+}
+
+/* Stile immagini */
+#immagini img {
+    width: 250px;       /* larghezza in pixel */
+    height: 180px;      /* altezza in pixel */
+    object-fit: cover;  /* evita distorsione */
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#piatto {
+    width: 300px;       /* larghezza in pixel */
+    height: 200px;      /* altezza in pixel */
+    object-fit: cover;  /* evita distorsione */
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#tabellaImg {
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+#tabellaImg td {
+    padding: 10px;
+}
+
+#tabellaImg img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}

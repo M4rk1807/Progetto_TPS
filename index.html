@@ -4,41 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricette</title>
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style1.css">
 </head>
+
 <body>
-    <label>cerca ricetta</label>
-    <div id="ricerca">
+
+<label>cerca ricetta</label>
+<div id="ricerca">
     <input type="text" id="cercaTesto" placeholder="Cerca una ricetta...">
     <button id="btnCerca">Cerca</button>
-    </div>
+    <button id="Accedi">Accedi</button>
+</div>
 
+<div id="output">
+    <div id="testo"></div>
+    <div id="immagini"></div>
+</div>
 
-    <div id="output">
-        <div id="testo"></div>
-        <div id="immagini"></div>
-    </div>
-
+<table id="tabellaImg"></table>
 
 <script>
 async function carica() {
-
     const risposta = await fetch('ricette.json');
     const dati = await risposta.json();
     const ricette = dati.ricette;
 
-    let htmlOutput = "";
+    let htmlOutput = [];
     let imgs = [];
-    let immagini = "";
-    let nuovo = [];
-
-    
 
     for (let i = 0; i < ricette.length; i++) {
-        htmlOutput += `
-            <p>id: ${ricette[i].id}</p>
-            <p>titolo: ${ricette[i].titolo}</p>
+        htmlOutput[i] = `
+            <p><strong>titolo: ${ricette[i].titolo}</strong></p>
             <p>descrizione: ${ricette[i].descrizione}</p>
             <p>tempo: ${ricette[i].tempo_preparazione}</p>
             <p>porzioni: ${ricette[i].porzioni}</p>
@@ -49,32 +45,64 @@ async function carica() {
         imgs[i] = ricette[i].immagine;
     }
 
-    for(let i = 0; i < imgs.length; i++) {
-        immagini += `
-            <img src="${imgs[i]}">       
-        `;
-    }
+    document.getElementById("testo").innerHTML = "";
+    document.getElementById("immagini").innerHTML = "";
 
-    document.getElementById("immagini").innerHTML = immagini;
-    document.getElementById("testo").innerHTML = htmlOutput;
-}
+    const tabella = document.getElementById("tabellaImg");
+    tabella.innerHTML = "";
 
+    let html = "<tr>";
+    const colonne = 3;
 
-    let valore = document.getElementById("text");
+    for (let i = 0; i < imgs.length; i++) {
+        html += `<td><img src="${imgs[i]}"></td>`;
 
- btnCerca.addEventListener("click", async () => {
-        for(let i = 0; i < ricette.length; i++) {
-        if(ricette[i].titolo === valore){
-            console.log("${ricette[i].descrizione}")
+        if ((i + 1) % colonne === 0 && i !== imgs.length - 1) {
+            html += "</tr><tr>";
         }
     }
-    });
+
+    html += "</tr>";
+    tabella.innerHTML = html;
+
+
+    tabella.addEventListener("click", function (e) {
+    if (e.target.tagName === "IMG") {
+        const index = [...tabella.querySelectorAll("img")].indexOf(e.target);
+        localStorage.setItem("ricettaSelezionata", index);
+        window.location.href = "ricetta.html";
+    }
+
+});
+
+}
+
+// pulsante cerca
+const btnCerca = document.getElementById("btnCerca");
+
+btnCerca.addEventListener("click", async () => {
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    const ricette = dati.ricette;
+    let valore = document.getElementById("cercaTesto").value;
+
+    for (let i = 0; i < ricette.length; i++) {
+        if (ricette[i].titolo === valore) {
+            console.log(ricette[i]);
+            window.location.href = "pag.html";
+        }
+    }
+});
+
+Accedi.addEventListener("click", async () => {
+    window.location.href = "form.html";
+
+});
 
 carica();
+btnCerca.addEventListener("click", carica);
+Accedi.addEventListener("click", carica);
 </script>
 
 </body>
 </html>
-
-
-

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricetta Selezionata</title>
+</head>
+<body>
+    <div id="output">
+        <div id="testo"></div>
+        <div id="immagini"></div>
+    </div>
+
+<script>
+async function carica() {
+    // prendi l'indice della ricetta selezionata dal localStorage
+    const index = localStorage.getItem("ricettaSelezionata");
+    if (index === null) {
+        document.getElementById("testo").innerHTML = "<p>Nessuna ricetta selezionata.</p>";
+        return;
+    }
+
+    // carica il file JSON
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    const ricetta = dati.ricette[index];
+
+    // stampa immagine e testo
+    document.getElementById("immagini").innerHTML = `<img src="${ricetta.immagine}" alt="${ricetta.titolo}" style="width:300px;height:auto;">`;
+
+    document.getElementById("testo").innerHTML = `
+        <h2>${ricetta.titolo}</h2>
+        <p><strong>Descrizione:</strong> ${ricetta.descrizione}</p>
+        <p><strong>Tempo di preparazione:</strong> ${ricetta.tempo_preparazione}</p>
+        <p><strong>Porzioni:</strong> ${ricetta.porzioni}</p>
+        <p><strong>Ingredienti:</strong> ${ricetta.ingredienti}</p>
+        <p><strong>Preparazione:</strong> ${ricetta.preparazione}</p>
+    `;
+}
+
+carica();
+</script>
+</body>
+</html>
