@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accesso</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="container" id="output">
@@ -15,22 +16,93 @@
       <input type="email" id="login-email" required>
 
       <label for="login-password">Password:</label>
-      <input type="password" id="login-password" required>
+      <div class="password-container">
+        <input type="password" id="login-password" required>
+        <i class="fas fa-eye" id="togglePassword"></i>
+      </div>
 
-      <button id="processBtn" type="submit">Accedi</button>
+      <div class="form-buttons">
+        <button id="processBtn" type="submit">Accedi</button>
+        <button type="button" class="btn-secondary" onclick="goBack()">Indietro</button>
+      </div>
     </form>
-    <p id="message"></p>
+  </div>
+
+  <!-- Modal per Accesso Effettuato -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Accesso Effettuato</h2>
+      </div>
+      <div class="modal-body">
+        <p>Benvenuto! Accesso effettuato con successo.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeSuccessModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal per Credenziali Sbagliate -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content modal-error">
+      <div class="modal-header modal-header-error">
+        <h2>Credenziali Sbagliate</h2>
+      </div>
+      <div class="modal-body">
+        <p>Email o password non corretti. Riprova.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeErrorModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
   </div>
 
 <script>
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("login-password");
+
+togglePassword.addEventListener("click", function() {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.classList.remove("fa-eye");
+        togglePassword.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        togglePassword.classList.remove("fa-eye-slash");
+        togglePassword.classList.add("fa-eye");
+    }
+});
+
+function goBack() {
+    window.location.href = "index.html";
+}
+
+function closeSuccessModal() {
+    window.location.href = "index.html";
+}
+
+function closeErrorModal() {
+    document.getElementById("errorModal").style.display = "none";
+    document.getElementById("login-email").value = "";
+    document.getElementById("login-password").value = "";
+    document.getElementById("login-email").focus();
+}
+
 async function handleLogin(event) {
-    event.preventDefault(); // evita il refresh della pagina
+    event.preventDefault();
 
     const email = document.getElementById("login-email").value.trim().toLowerCase();
     const password = document.getElementById("login-password").value;
 
     try {
         const risposta = await fetch('utenti.json');
+        
+        if (!risposta.ok) {
+            throw new Error('Errore nel caricamento del file');
+        }
+        
         const dati = await risposta.json();
         const utenti = dati.utenti;
 
@@ -43,22 +115,18 @@ async function handleLogin(event) {
             }
         }
 
-        const message = document.getElementById("message");
-
         if (trovato) {
-            message.style.color = "green";
-            message.textContent = "Accesso effettuato! Reindirizzamento...";
-            // redirect dopo 1 secondo
+            document.getElementById("successModal").style.display = "flex";
             setTimeout(() => {
                 window.location.href = "index.html";
-            }, 1000);
+            }, 3000);
         } else {
-            message.style.color = "red";
-            message.textContent = "Email o password non corretti. Contatta l'amministratore.";
+            document.getElementById("errorModal").style.display = "flex";
         }
 
     } catch (error) {
         console.error("Errore nel caricamento del file JSON:", error);
+        alert("Errore nel caricamento dei dati. Riprova più tardi.");
     }
 }
 </script>
