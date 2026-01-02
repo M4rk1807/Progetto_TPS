@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style1.css">
+    <title>Ricetta Selezionata</title>
+</head>
+<body>
+    <div style="display: flex; gap: 10px; margin: 10px;">
+        <button id="btnIndietro" style="padding: 10px 20px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px;">Torna indietro</button>
+        <button id="btnElimina" style="padding: 10px 20px; cursor: pointer; background-color: #dc3545; color: white; border: none; border-radius: 5px; font-size: 16px;">Elimina Ricetta</button>
+    </div>
+    <div id="output">
+        <div id="testo"></div>
+        <div id="immagini"></div>
+    </div>
+
+<script>
+let ricettaCorrente = null;
+let indexCorrente = null;
+
+async function carica() {
+    // prendi l'indice della ricetta selezionata dal localStorage
+    const index = localStorage.getItem("ricettaSelezionata");
+    indexCorrente = index;
+    
+    if (index === null) {
+        document.getElementById("testo").innerHTML = "<p>Nessuna ricetta selezionata.</p>";
+        return;
+    }
+
+    // carica il file JSON
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    let ricette = dati.ricette;
+
+    // Carica ricette aggiuntive dal localStorage
+    const ricetteAggiuntive = JSON.parse(localStorage.getItem("ricetteAggiuntive") || "[]");
+    ricette = ricette.concat(ricetteAggiuntive);
+
+    const ricetta = ricette[index];
+    ricettaCorrente = ricetta;
+
+    if (!ricetta) {
+        document.getElementById("testo").innerHTML = "<p>Ricetta non trovata.</p>";
+        return;
+    }
+
+    // Mostra/nascondi il pulsante elimina in base al tipo di ricetta
+    const btnElimina = document.getElementById("btnElimina");
+    const ricetteOriginali = dati.ricette.length;
+    
+    if (index >= ricetteOriginali) {
+        btnElimina.style.display = "block";
+    } else {
+        btnElimina.style.display = "none";
+    }
+
+    // stampa immagine e testo
+    document.getElementById("immagini").innerHTML = `<img src="${ricetta.immagine}" alt="${ricetta.titolo}" style="width:300px;height:auto;">`;
+
+    document.getElementById("testo").innerHTML = `
+        <h2>${ricetta.titolo}</h2>
+        <p><strong>Descrizione:</strong> ${ricetta.descrizione}</p>
+        <p><strong>Tempo di preparazione:</strong> ${ricetta.tempo_preparazione}</p>
+        <p><strong>Porzioni:</strong> ${ricetta.porzioni}</p>
+        <p><strong>Ingredienti:</strong> ${ricetta.ingredienti}</p>
+        <p><strong>Preparazione:</strong> ${ricetta.preparazione}</p>
+    `;
+}
+
+// pulsante torna indietro
+document.getElementById("btnIndietro").addEventListener("click", () => {
+    window.location.href = "index.html";
+});
+
+// pulsante elimina ricetta
+document.getElementById("btnElimina").addEventListener("click", async () => {
+    if (!ricettaCorrente) {
+        alert("Nessuna ricetta selezionata");
+        return;
+    }
+
+    const conferma = confirm(`Sei sicuro di voler eliminare la ricetta "${ricettaCorrente.titolo}"?`);
+    if (!conferma) {
+        return;
+    }
+
+    // Carica il file JSON
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    const ricetteOriginali = dati.ricette.length;
+
+    // Carica ricette aggiuntive dal localStorage
+    let ricetteAggiuntive = JSON.parse(localStorage.getItem("ricetteAggiuntive") || "[]");
+
+    // Calcola l'indice nella lista delle ricette aggiuntive
+    const indiceNelleAggiunte = indexCorrente - ricetteOriginali;
+
+    if (indiceNelleAggiunte >= 0 && indiceNelleAggiunte < ricetteAggiuntive.length) {
+        ricetteAggiuntive.splice(indiceNelleAggiunte, 1);
+        localStorage.setItem("ricetteAggiuntive", JSON.stringify(ricetteAggiuntive));
+        alert("Ricetta eliminata con successo!");
+        window.location.href = "index.html";
+    } else {
+        alert("Non puoi eliminare una ricetta originale!");
+    }
+});
+
+carica();
+</script>
+</body>
+</html>

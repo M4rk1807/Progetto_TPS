@@ -1,0 +1,166 @@
+{
+    "nome_catalogo":"Ricettario",
+    "ricette":[
+
+        {
+        "id":"Ricetta 1",
+        "titolo":"Pasta alla Carbonara",
+        "immagine":"immagini/Spaghetti-alla-carbonara.jpg",
+        "descrizione":"Piatto romano ricco di gusto, perfetto per ogni occasione",
+        "tempo_preparazione":"30 minuti",
+        "porzioni":4,
+        "ingredienti":[
+            "400 g di pasta a scelta",
+            "150 g di guanciale",
+            "4 uova",
+            "100 g di pecorino",
+           "sale e pepe q.b"
+            ],
+        "preparazione":[
+            "Far bollire acqua in una pentola, aggiungere il sale e cuocere la pasta al dente.",
+            "Nel frattempo, taglia il guanciale fallo rosolare sul fuoco.",
+            "Sbattere le uova aggiungendo anche il pecorino e del pepe q.b.",
+            "Quando la pasta è pronta, scolarla e conservare un po' di acqua di cottura.",
+            "Unire la pasta al guanciale e le uova mescolando velocemente",
+            "Impiattare e servire"
+            ]
+            
+        },
+       
+        {
+        "id":"Ricetta 2",
+        "titolo":"Risotto ai funghi porcini",
+        "immagine":"immagini/risotto-ai-funghi.jpg",
+        "descrizione":"Piatto saporito perfetto per l'autunno",
+        "tempo_preparazione":"30 minuti",
+        "porzioni":4,
+        "ingredienti":[
+            "320 g di riso",
+            "300 g di funghi porcini freschi",
+            "1 cipolla",
+            "1 litro di brodo vegetale",
+            "50 g di parmigiano grattuggiato",
+            "1 bicchiere di vino bianco",
+            "olio di oliva"
+        ],
+            "preparazione":[
+                "Pulire per bene i funghi e tagliarli a fette.",
+                "Far soffriggere la cipolla tritata con l'olio d'oliva.",
+                "Aggiungerre i funghi e lasciarli cuocere per cinque minuti; aggiungere il riso da far tostare e successivamente aggiungere il brodo e sfumare con il vino",
+                "Quando il riso è al dente, far mantecare con il burro e il parmiggiano."
+            ]
+            
+        },
+
+        {
+        "id": "Ricetta 3",
+        "titolo": "Pollo alla Cacciatora",
+        "immagine":"immagini/pollo-alla-cacciatora.jpg",
+        "descrizione": "Un piatto tradizionale italiano, ricco di sapore, che combina pollo, pomodori, olive e aromi.",
+        "tempo_preparazione": "1 ora",
+        "porzioni": 4,
+        "ingredienti": [
+            "4 cosce di pollo",
+            "1 cipolla",
+            "2 spicchi d'aglio",
+            "400 g di pomodori pelati",
+            "100 g di olive nere",
+            "1 bicchiere di vino bianco",
+            "1 rametto di rosmarino",
+            "Olio d'oliva q.b.",
+            "Sale e pepe q.b."
+        ],
+        "preparazione": [
+            "In una padella larga, scalda l'olio d'oliva e fai rosolare le cosce di pollo su tutti i lati fino a dorarle.",
+            "Togli il pollo e, nella stessa padella, soffriggi la cipolla tritata e l'aglio fino a che diventano morbidi.",
+            "Aggiungi i pomodori pelati, schiacciandoli con una forchetta, e il rosmarino. Mescola e lascia cuocere per 10 minuti.",
+            "Rimetti il pollo nella padella, aggiungi il vino bianco e lascia evaporare l'alcool.",
+            "Aggiungi le olive nere e un po' di sale e pepe. Copri e cuoci a fuoco basso per circa 40 minuti, girando il pollo di tanto in tanto.",
+            "Quando il pollo è cotto, impiatta e servi caldo."
+        ]
+        },
+
+        {
+            "id": "Ricetta 4",
+            "titolo": "Salmone al Forno con Erbe",
+            "immagine":"immagini/salmone-al-forno.jpg",
+            "descrizione": "Un piatto di pesce semplice ma saporito, con il salmone cotto al forno e arricchito con erbe aromatiche.",
+            "tempo_preparazione": "30 minuti",
+            "porzioni": 4,
+            "ingredienti": [
+                "4 filetti di salmone",
+                "1 limone",
+                "2 cucchiai di olio d'oliva",
+                "1 rametto di rosmarino",
+                "1 rametto di timo",
+                "Sale e pepe q.b."
+            ],
+            "preparazione": [
+                "Preriscalda il forno a 180°C.",
+                "Disponi i filetti di salmone su una teglia rivestita di carta da forno.",
+                "Cospargi i filetti con olio d'oliva, sale e pepe, e aggiungi le erbe aromatiche (rosmarino e timo).",
+                "Taglia il limone a fette e disponile sopra i filetti di salmone.",
+                "Cuoci in forno per circa 15-20 minuti, o fino a quando il salmone è ben cotto e si sfalda facilmente con una forchetta.",
+                "Servi il salmone caldo, accompagnato da una freschissima insalata o verdure grigliate."
+            ]
+        },
+
+        {
+            "id": "Ricetta 5",
+            "titolo": "Tiramisù",
+            "immagine":"immagini/tiramisu.jpg",
+            "descrizione": "Un classico dolce italiano a base di mascarpone, caffè e savoiardi, perfetto per ogni occasione speciale.",
+            "tempo_preparazione": "40 minuti + riposo in frigo",
+            "porzioni": 6,
+            "ingredienti": [
+                "500 g di mascarpone",
+                "3 uova",
+                "100 g di zucchero",
+                "200 ml di caffè forte",
+                "250 g di savoiardi",
+                "Cacao amaro in polvere q.b.",
+                "1 cucchiaio di liquore al caffè (opzionale)"
+            ],
+            "preparazione": [
+                "Prepara il caffè e lascialo raffreddare. Se desideri, aggiungi un cucchiaio di liquore al caffè per un tocco extra.",
+                "Separa i tuorli dagli albumi. Monta i tuorli con lo zucchero fino a ottenere un composto chiaro e spumoso.",
+                "Aggiungi il mascarpone ai tuorli montati e mescola delicatamente fino ad ottenere una crema liscia.",
+                "In un'altra ciotola, monta gli albumi a neve ferma e incorporali delicatamente alla crema di mascarpone con un movimento dall'alto verso il basso.",
+                "Inzuppa rapidamente i savoiardi nel caffè, facendo attenzione a non inzupparli troppo.",
+                "In una pirofila, forma uno strato di savoiardi, coprili con metà della crema al mascarpone e livella bene.",
+                "Ripeti l'operazione con un altro strato di savoiardi e crema.",
+                "Copri il tiramisù con pellicola trasparente e lascia riposare in frigorifero per almeno 4 ore, meglio se tutta la notte.",
+                "Prima di servire, spolvera la superficie con cacao amaro e, se desideri, decora con scaglie di cioccolato o un po' di caffè macinato."
+            ]
+         },
+
+        {
+        "id": "Ricetta 6",
+        "titolo": "Crostata alla Marmellata",
+        "immagine": "immagini/crostata-marmellata.jpg",
+        "descrizione": "Dolce tradizionale italiano, semplice e perfetto per la colazione o la merenda",
+        "tempo_preparazione": "60 minuti",
+        "porzioni": 8,
+        "ingredienti": [
+            "300 g di farina 00",
+            "150 g di burro",
+            "130 g di zucchero",
+            "2 uova",
+            "1 cucchiaino di lievito per dolci",
+            "scorza di limone grattugiata q.b.",
+            "300 g di marmellata a scelta"
+        ],
+        "preparazione": [
+            "In una ciotola unire la farina, lo zucchero e il lievito.",
+            "Aggiungere il burro freddo a pezzetti e lavorare fino a ottenere un composto sabbioso.",
+            "Unire le uova e la scorza di limone, impastando fino a formare un panetto.",
+            "Avvolgere l'impasto nella pellicola e lasciarlo riposare in frigorifero per 30 minuti.",
+            "Stendere gran parte della pasta frolla e rivestire una tortiera imburrata.",
+            "Farcire con la marmellata livellandola bene.",
+            "Con la pasta rimasta creare delle strisce e disporle sulla superficie.",
+            "Cuocere in forno preriscaldato a 180°C per circa 35 minuti.",
+            "Lasciare raffreddare prima di servire."
+        ]
+    }
+    ] 
+}

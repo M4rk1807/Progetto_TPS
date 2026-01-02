@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricette</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<label>cerca ricetta</label>
+<div id="ricerca">
+    <input type="text" id="cercaTesto" placeholder="Cerca una ricetta per titolo o ingrediente...">
+    <button id="btnCerca">Cerca</button>
+    <button id="btnAggiungi">Aggiungi Ricetta</button>
+    <button id="Accedi">Accedi</button>
+</div>
+
+<!-- Container per risultati di ricerca -->
+<div id="risultatiRicerca" style="display: none; margin: 20px; padding: 20px; background-color: #f5f5f5; border-radius: 5px;">
+    <h2>Risultati della ricerca:</h2>
+    <ul id="listaRisultati" style="list-style-type: none; padding: 0;"></ul>
+</div>
+
+<table id="tabellaImg"></table>
+
+<script>
+async function carica() {
+    
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    let ricette = dati.ricette;
+
+    
+    const ricetteAggiuntive = JSON.parse(localStorage.getItem("ricetteAggiuntive") || "[]");
+    ricette = ricette.concat(ricetteAggiuntive);
+
+    let htmlOutput = [];
+    let imgs = [];
+
+    for (let i = 0; i < ricette.length; i++) {
+        htmlOutput[i] = `
+            <p><strong>titolo: ${ricette[i].titolo}</strong></p>
+            <p>descrizione: ${ricette[i].descrizione}</p>
+            <p>tempo: ${ricette[i].tempo_preparazione}</p>
+            <p>porzioni: ${ricette[i].porzioni}</p>
+            <p>ingredienti: ${ricette[i].ingredienti}</p>
+            <p>preparazione: ${ricette[i].preparazione}</p>
+            <hr>
+        `;
+        imgs[i] = ricette[i].immagine;
+    }
+
+ 
+
+    const tabella = document.getElementById("tabellaImg");
+    tabella.innerHTML = "";
+
+    let html = "<tr>";
+    const colonne = 3;
+
+    for (let i = 0; i < imgs.length; i++) {
+        html += `<td><img src="${imgs[i]}"></td>`;
+
+        if ((i + 1) % colonne === 0 && i !== imgs.length - 1) {
+            html += "</tr><tr>";
+        }
+    }
+
+    html += "</tr>";
+    tabella.innerHTML = html;
+
+
+    tabella.addEventListener("click", function (e) {
+    if (e.target.tagName === "IMG") {
+        const index = [...tabella.querySelectorAll("img")].indexOf(e.target);
+        localStorage.setItem("ricettaSelezionata", index);
+        window.location.href = "ricetta.html";
+    }
+
+});
+
+}
+
+// pulsante cerca
+const btnCerca = document.getElementById("btnCerca");
+
+btnCerca.addEventListener("click", async () => {
+    const risposta = await fetch('ricette.json');
+    const dati = await risposta.json();
+    const ricette = dati.ricette;
+    let valore = document.getElementById("cercaTesto").value.toLowerCase().trim();
+
+    if (valore === "") {
+        alert("Scrivi un titolo o un ingrediente da cercare");
+        return;
+    }
+
+    let risultati = [];
+    
+    // Cerco sia nel titolo che negli ingredienti
+    for (let i = 0; i < ricette.length; i++) {
+        let trovato = false;
+        
+        // Cerco nel titolo
+        if (ricette[i].titolo.toLowerCase().includes(valore)) {
+            trovato = true;
+        }
+        
+        // Cerco negli ingredienti
+        if (!trovato && ricette[i].ingredienti) {
+            for (let j = 0; j < ricette[i].ingredienti.length; j++) {
+                if (ricette[i].ingredienti[j].toLowerCase().includes(valore)) {
+                    trovato = true;
+                    break;
+                }
+            }
+        }
+        
+        if (trovato) {
+            risultati.push({index: i, titolo: ricette[i].titolo});
+        }
+    }
+
+    if (risultati.length === 0) {
+        alert("Nessuna ricetta trovata per: " + valore);
+        return;
+    }
+
+    // Se c'è solo un risultato, va direttamente alla ricetta
+    if (risultati.length === 1) {
+        localStorage.setItem("ricettaSelezionata", risultati[0].index);
+        window.location.href = "ricetta.html";
+        return;
+    }
+
+    // Se ci sono più risultati, mostra una lista
+    const listaRisultati = document.getElementById("listaRisultati");
+    listaRisultati.innerHTML = "";
+    
+    risultati.forEach(ricetta => {
+        const li = document.createElement("li");
+        li.style.padding = "10px";
+        li.style.margin = "5px 0";
+        li.style.backgroundColor = "#fff";
+        li.style.borderRadius = "3px";
+        li.style.cursor = "pointer";
+        li.style.transition = "background-color 0.3s";
+        li.textContent = ricetta.titolo;
+        
+        li.addEventListener("mouseover", () => {
+            li.style.backgroundColor = "#e0e0e0";
+        });
+        
+        li.addEventListener("mouseout", () => {
+            li.style.backgroundColor = "#fff";
+        });
+        
+        li.addEventListener("click", () => {
+            localStorage.setItem("ricettaSelezionata", ricetta.index);
+            window.location.href = "ricetta.html";
+        });
+        
+        listaRisultati.appendChild(li);
+    });
+    
+    document.getElementById("risultatiRicerca").style.display = "block";
+});
+
+Accedi.addEventListener("click", async () => {
+    window.location.href = "form.html";
+
+});
+
+// Pulsante Aggiungi Ricetta
+document.getElementById("btnAggiungi").addEventListener("click", () => {
+    window.location.href = "aggiungi.html";
+});
+
+carica();
+btnCerca.addEventListener("click", carica);
+Accedi.addEventListener("click", carica);
+document.getElementById("btnAggiungi").addEventListener("click", carica);
+</script>
+
+</body>
+</html>
