@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesso</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container" id="output">
+    <h1>Accesso</h1>
+
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <label for="login-email">Email:</label>
+      <input type="email" id="login-email" required>
+
+      <label for="login-password">Password:</label>
+      <div class="password-container">
+        <input type="password" id="login-password" required>
+        <i class="fas fa-eye" id="togglePassword"></i>
+      </div>
+
+      <div class="form-buttons">
+        <button id="processBtn" type="submit">Accedi</button>
+        <button type="button" class="btn-secondary" onclick="goBack()">Indietro</button>
+        <button type="button" class="btn-success" onclick="goRegister()">Registrati</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal per Accesso Effettuato -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Accesso Effettuato</h2>
+      </div>
+      <div class="modal-body">
+        <p>Benvenuto! Accesso effettuato con successo.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeSuccessModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal per Credenziali Sbagliate -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content modal-error">
+      <div class="modal-header modal-header-error">
+        <h2>Credenziali Sbagliate</h2>
+      </div>
+      <div class="modal-body">
+        <p>Email o password non corretti. Riprova.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeErrorModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<script>
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("login-password");
+
+togglePassword.addEventListener("click", function() {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.classList.remove("fa-eye");
+        togglePassword.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        togglePassword.classList.remove("fa-eye-slash");
+        togglePassword.classList.add("fa-eye");
+    }
+});
+
+function goBack() {
+    window.location.href = "index.html";
+}
+
+function goRegister() {
+    window.location.href = "registrazione.html";
+}
+
+function closeSuccessModal() {
+    window.location.href = "index.html";
+}
+
+function closeErrorModal() {
+    document.getElementById("errorModal").style.display = "none";
+    document.getElementById("login-email").value = "";
+    document.getElementById("login-password").value = "";
+    document.getElementById("login-email").focus();
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim().toLowerCase();
+    const password = document.getElementById("login-password").value;
+
+    try {
+      const risposta = await fetch('utenti.json');
+
+      if (!risposta.ok) {
+        throw new Error('Errore nel caricamento del file');
+      }
+
+      const dati = await risposta.json();
+      let utenti = dati.Utenti;
+
+      // Carica utenti registrati dal localStorage
+      const utentiRegistrati = JSON.parse(localStorage.getItem("utentiRegistrati") || "[]");
+
+      // Combina gli utenti
+      utenti = utenti.concat(utentiRegistrati);
+
+        let trovato = false;
+
+        for (let i = 0; i < utenti.length; i++) {
+            if (utenti[i].email.toLowerCase() === email && utenti[i].password === password) {
+                trovato = true;
+                break;
+            }
+        }
+
+        if (trovato) {
+            document.getElementById("successModal").style.display = "flex";
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 3000);
+        } else {
+            document.getElementById("errorModal").style.display = "flex";
+        }
+
+    } catch (error) {
+        console.error("Errore nel caricamento del file JSON:", error);
+        alert("Errore nel caricamento dei dati. Riprova più tardi.");
+    }
+}
+</script>
+</body>
+</html>

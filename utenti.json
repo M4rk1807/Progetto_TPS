@@ -1,0 +1,32 @@
+{
+    "Utenti":[
+        {
+            "email":"mariotomail@gmail.com",
+            "password":"mario1234"
+        },
+        {
+            "email":"lucatomail@gmail.com",
+            "password":"luca1234"
+        },
+        {
+            "email":"giovannitomail@gmail.com",
+            "password":"giovanni1234"
+        },
+        {
+            "email":"luciatomail@gmail.com",
+            "password":"lucia1234"
+        },
+        {
+            "email":"tonitomail@gmail.com",
+            "password":"toni1234"
+        },
+        {
+            "email":"paolotomail@gmail.com",
+            "password":"paolo1234"
+        },
+    {
+            "email":"mariarosatomail@gmail.com",
+            "password":"maria1234"
+        }
+    ]
+}

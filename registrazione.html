@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrazione</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container" id="output">
+    <h1>Crea un Account</h1>
+
+    <form id="register-form" onsubmit="handleRegister(event)">
+      <label for="register-email">Email:</label>
+      <input type="email" id="register-email" required>
+
+      <label for="register-password">Password:</label>
+      <div class="password-container">
+        <input type="password" id="register-password" required>
+        <i class="fas fa-eye" id="togglePassword"></i>
+      </div>
+
+      <label for="register-password-confirm">Conferma Password:</label>
+      <div class="password-container">
+        <input type="password" id="register-password-confirm" required>
+        <i class="fas fa-eye" id="togglePasswordConfirm"></i>
+      </div>
+
+      <div class="form-buttons">
+        <button id="registerBtn" type="submit">Registrati</button>
+        <button type="button" class="btn-secondary" onclick="goBack()">Indietro</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal per Registrazione Effettuata -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Registrazione Effettuata</h2>
+      </div>
+      <div class="modal-body">
+        <p>Account creato con successo! Accedi per continuare.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeSuccessModal()">Accedi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal per Errori -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content modal-error">
+      <div class="modal-header modal-header-error">
+        <h2>Errore</h2>
+      </div>
+      <div class="modal-body">
+        <p id="errorMessage">Si è verificato un errore</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeErrorModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const togglePassword = document.getElementById("togglePassword");
+const togglePasswordConfirm = document.getElementById("togglePasswordConfirm");
+const passwordInput = document.getElementById("register-password");
+const passwordConfirmInput = document.getElementById("register-password-confirm");
+
+togglePassword.addEventListener("click", function() {
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.classList.remove("fa-eye");
+        togglePassword.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        togglePassword.classList.remove("fa-eye-slash");
+        togglePassword.classList.add("fa-eye");
+    }
+});
+
+togglePasswordConfirm.addEventListener("click", function() {
+    if (passwordConfirmInput.type === "password") {
+        passwordConfirmInput.type = "text";
+        togglePasswordConfirm.classList.remove("fa-eye");
+        togglePasswordConfirm.classList.add("fa-eye-slash");
+    } else {
+        passwordConfirmInput.type = "password";
+        togglePasswordConfirm.classList.remove("fa-eye-slash");
+        togglePasswordConfirm.classList.add("fa-eye");
+    }
+});
+
+function goBack() {
+    window.location.href = "form.html";
+}
+
+function closeSuccessModal() {
+    window.location.href = "form.html";
+}
+
+function closeErrorModal() {
+    document.getElementById("errorModal").style.display = "none";
+}
+
+function showError(message) {
+    document.getElementById("errorMessage").innerText = message;
+    document.getElementById("errorModal").style.display = "flex";
+}
+
+async function handleRegister(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("register-email").value.trim().toLowerCase();
+    const password = document.getElementById("register-password").value;
+    const passwordConfirm = document.getElementById("register-password-confirm").value;
+
+    // Validazione
+    if (password !== passwordConfirm) {
+        showError("Le password non corrispondono!");
+        return;
+    }
+
+    if (password.length < 6) {
+        showError("La password deve essere almeno 6 caratteri!");
+        return;
+    }
+
+    if (!email.includes("@")) {
+        showError("Inserisci un email valida!");
+        return;
+    }
+
+    try {
+        // Carica utenti dal JSON
+        const risposta = await fetch('utenti.json');
+        if (!risposta.ok) {
+            throw new Error('Errore nel caricamento del file');
+        }
+        
+        const dati = await risposta.json();
+        let utenti = dati.Utenti;
+
+        // Carica utenti registrati dal localStorage
+        const utentiRegistrati = JSON.parse(localStorage.getItem("utentiRegistrati") || "[]");
+        
+        // Controlla se l'email esiste
+        const emailEsiste = utenti.some(u => u.email.toLowerCase() === email) ||
+                           utentiRegistrati.some(u => u.email.toLowerCase() === email);
+
+        if (emailEsiste) {
+            showError("Questa email è già registrata!");
+            return;
+        }
+
+        // Crea nuovo utente
+        const nuovoUtente = {
+            email: email,
+            password: password
+        };
+
+        // Salva nel localStorage
+        utentiRegistrati.push(nuovoUtente);
+        localStorage.setItem("utentiRegistrati", JSON.stringify(utentiRegistrati));
+
+        // Mostra modal di successo
+        document.getElementById("successModal").style.display = "flex";
+
+    } catch (error) {
+        console.error("Errore:", error);
+        showError("Errore nel caricamento dei dati. Riprova più tardi.");
+    }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Ricetta</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container-form {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .ingredienti-list,
+        .preparazione-list {
+            margin-top: 10px;
+        }
+        .ingrediente-item,
+        .step-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .ingrediente-item input,
+        .step-item input {
+            flex: 1;
+        }
+        .btn-remove {
+            padding: 8px 12px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+        .btn-add {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .btn-submit {
+            flex: 1;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        .btn-back {
+            flex: 1;
+            padding: 12px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-form">
+        <h1>Aggiungi una Nuova Ricetta</h1>
+        
+        <form id="formRicetta">
+            <!-- Titolo -->
+            <div class="form-group">
+                <label for="titolo">Titolo della Ricetta *</label>
+                <input type="text" id="titolo" name="titolo" required>
+            </div>
+
+            <!-- Descrizione -->
+            <div class="form-group">
+                <label for="descrizione">Descrizione *</label>
+                <textarea id="descrizione" name="descrizione" required></textarea>
+            </div>
+
+            <!-- URL Immagine -->
+            <div class="form-group">
+                <label for="immagine">URL Immagine</label>
+                <input type="url" id="immagine" name="immagine" placeholder="es: immagini/ricetta.jpg">
+            </div>
+
+            <!-- Tempo di Preparazione -->
+            <div class="form-group">
+                <label for="tempo_preparazione">Tempo di Preparazione *</label>
+                <input type="text" id="tempo_preparazione" name="tempo_preparazione" placeholder="es: 30 minuti" required>
+            </div>
+
+            <!-- Porzioni -->
+            <div class="form-group">
+                <label for="porzioni">Numero di Porzioni *</label>
+                <input type="number" id="porzioni" name="porzioni" min="1" required>
+            </div>
+
+            <!-- Ingredienti -->
+            <div class="form-group">
+                <label>Ingredienti *</label>
+                <div class="ingredienti-list" id="ingredientiList">
+                    <div class="ingrediente-item">
+                        <input type="text" class="ingrediente" placeholder="es: 400 g di pasta" required>
+                        <button type="button" class="btn-remove" onclick="rimuoviIngrediante(this)">Rimuovi</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="aggiungiIngrediante()">+ Aggiungi Ingrediente</button>
+            </div>
+
+            <!-- Preparazione -->
+            <div class="form-group">
+                <label>Passaggi di Preparazione *</label>
+                <div class="preparazione-list" id="preparazioneList">
+                    <div class="step-item">
+                        <input type="text" class="passo" placeholder="es: Far bollire l'acqua..." required>
+                        <button type="button" class="btn-remove" onclick="rimuoviPasso(this)">Rimuovi</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="aggiungiPasso()">+ Aggiungi Passo</button>
+            </div>
+
+            <!-- Bottoni -->
+            <div class="form-buttons">
+                <button type="submit" class="btn-submit">Salva Ricetta</button>
+                <button type="button" class="btn-back" onclick="tornaIndietro()">Indietro</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function aggiungiIngrediante() {
+            const list = document.getElementById("ingredientiList");
+            const div = document.createElement("div");
+            div.className = "ingrediente-item";
+            div.innerHTML = `
+                <input type="text" class="ingrediente" placeholder="es: 400 g di pasta" required>
+                <button type="button" class="btn-remove" onclick="rimuoviIngrediante(this)">Rimuovi</button>
+            `;
+            list.appendChild(div);
+        }
+
+        function rimuoviIngrediante(btn) {
+            const items = document.querySelectorAll(".ingrediente-item");
+            if (items.length > 1) {
+                btn.parentElement.remove();
+            } else {
+                alert("Deve esserci almeno un ingrediente!");
+            }
+        }
+
+        function aggiungiPasso() {
+            const list = document.getElementById("preparazioneList");
+            const div = document.createElement("div");
+            div.className = "step-item";
+            div.innerHTML = `
+                <input type="text" class="passo" placeholder="es: Far bollire l'acqua..." required>
+                <button type="button" class="btn-remove" onclick="rimuoviPasso(this)">Rimuovi</button>
+            `;
+            list.appendChild(div);
+        }
+
+        function rimuoviPasso(btn) {
+            const items = document.querySelectorAll(".step-item");
+            if (items.length > 1) {
+                btn.parentElement.remove();
+            } else {
+                alert("Deve esserci almeno un passo di preparazione!");
+            }
+        }
+
+        function tornaIndietro() {
+            window.location.href = "index.html";
+        }
+
+        document.getElementById("formRicetta").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            // Raccogliere i dati
+            const titolo = document.getElementById("titolo").value;
+            const descrizione = document.getElementById("descrizione").value;
+            const immagine = document.getElementById("immagine").value || "immagini/default.jpg";
+            const tempo_preparazione = document.getElementById("tempo_preparazione").value;
+            const porzioni = parseInt(document.getElementById("porzioni").value);
+
+            const ingredienti = Array.from(document.querySelectorAll(".ingrediente"))
+                .map(input => input.value)
+                .filter(val => val.trim() !== "");
+
+            const preparazione = Array.from(document.querySelectorAll(".passo"))
+                .map(input => input.value)
+                .filter(val => val.trim() !== "");
+
+            if (ingredienti.length === 0 || preparazione.length === 0) {
+                alert("Aggiungi almeno un ingrediente e un passo di preparazione!");
+                return;
+            }
+
+            // Creare l'oggetto ricetta
+            const nuovaRicetta = {
+                id: "Ricetta " + Date.now(),
+                titolo,
+                immagine,
+                descrizione,
+                tempo_preparazione,
+                porzioni,
+                ingredienti,
+                preparazione
+            };
+
+            // Salvare nel localStorage
+            let ricetteAggiuntive = JSON.parse(localStorage.getItem("ricetteAggiuntive") || "[]");
+            ricetteAggiuntive.push(nuovaRicetta);
+            localStorage.setItem("ricetteAggiuntive", JSON.stringify(ricetteAggiuntive));
+
+            alert("Ricetta aggiunta con successo!");
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>
