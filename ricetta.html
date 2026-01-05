@@ -7,10 +7,16 @@
     <title>Ricetta Selezionata</title>
 </head>
 <body>
-    <div style="display: flex; gap: 10px; margin: 10px;">
-        <button id="btnIndietro" style="padding: 10px 20px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px;">Torna indietro</button>
-        <button id="btnElimina" style="padding: 10px 20px; cursor: pointer; background-color: #dc3545; color: white; border: none; border-radius: 5px; font-size: 16px;">Elimina Ricetta</button>
-    </div>
+        <header class="site-header">
+            <div class="header-left">
+                <img src="Immagini/Logo.png" alt="Logo" class="site-logo">
+                <h1>Ricettario</h1>
+            </div>
+            <div class="header-right">
+                <button id="btnIndietro" class="hdr-btn">Torna indietro</button>
+                <button id="btnElimina" class="hdr-btn btn-danger">Elimina Ricetta</button>
+            </div>
+        </header>
     <div id="output">
         <div id="testo"></div>
         <div id="immagini"></div>

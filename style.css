@@ -10,8 +10,8 @@
   --primary-dark: #1e40af;
   --secondary: #64748b;
   --danger: #dc2626;
+  --bg: #F5F0E1;
   --success: #16a34a;
-  --bg: #f8fafc;
   --bg-light: #f1f5f9;
   --text: #1e293b;
   --text-light: #64748b;
@@ -260,6 +260,64 @@ button:active {
   background-color: var(--primary-dark);
 }
 
+/* Login page button styles - three brown tones */
+.login-page #processBtn {
+  background-color: #3b2f2f; /* dark brown */
+}
+.login-page #processBtn:hover {
+  background-color: #2e2323;
+}
+.login-page .btn-secondary {
+  background-color: #8b7355; /* medium brown */
+}
+.login-page .btn-secondary:hover {
+  background-color: #6f5a47;
+}
+.login-page .btn-success {
+  background-color: #c9a07a; /* light brown */
+}
+.login-page .btn-success:hover {
+  background-color: #b08969;
+}
+
+/* Register page button styles - two brown tones */
+.register-page #registerBtn {
+  background-color: #3b2f2f; /* dark brown */
+}
+.register-page #registerBtn:hover {
+  background-color: #2e2323;
+}
+.register-page .btn-secondary {
+  background-color: #c9a07a; /* light brown */
+}
+.register-page .btn-secondary:hover {
+  background-color: #b08969;
+}
+
+/* Add recipe page button styles */
+.add-recipe-page .btn-submit {
+  background-color: #3b2f2f; /* dark brown */
+}
+.add-recipe-page .btn-submit:hover {
+  background-color: #2e2323;
+}
+.add-recipe-page .btn-back {
+  background-color: #c9a07a; /* light brown */
+}
+.add-recipe-page .btn-back:hover {
+  background-color: #b08969;
+}
+
+/* Homepage search button */
+.home-page .search-btn {
+  background-color: #3b2f2f;
+  color: #fff;
+  font-weight: 600;
+}
+.home-page .search-btn:hover {
+  background-color: #2e2323;
+}
+
 @media (max-width: 480px) {
   body {
     padding: 10px;
@@ -290,4 +348,45 @@ button:active {
     padding: 12px 16px;
     font-size: 0.95rem;
   }
+}
+
+/* Header shared styles for pages: index, form, ricetta */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 14px 20px;
+  background: #C9A07A; /* tonalità marrone chiaro impostata */
+  color: #432F2A;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  gap: 10px;
+}
+
+.header-left { display: flex; align-items: center; gap: 12px; }
+.site-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 6px; }
+.site-header h1 { font-size: 1.4rem; margin: 0; color: #432F2A; }
+
+.header-right { display: flex; gap: 10px; align-items: center; }
+.header-right #ricerca { display: flex; gap: 10px; align-items: center; }
+
+.site-header button, .site-header .hdr-btn {
+  padding: 8px 12px;
+  background: #3b2f2f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.site-header button:hover, .site-header .hdr-btn:hover { background: #2e2323; transform: translateY(-1px); }
+
+.site-header .btn-danger { background: #a62f2f; }
+.site-header .btn-danger:hover { background: #8e2323; }
+
+@media (max-width: 740px) {
+  .site-header { flex-direction: column; align-items: stretch; gap: 12px; }
+  .header-right { justify-content: flex-end; }
+  .site-logo { width: 40px; height: 40px; }
 }

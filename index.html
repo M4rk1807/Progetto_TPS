@@ -7,14 +7,24 @@
     <link rel="stylesheet" href="style1.css">
 </head>
 
-<body>
+<body class="home-page">
 
-<label>Cerca Ricetta</label>
-<div id="ricerca">
-    <input type="text" id="cercaTesto" placeholder="Cerca una ricetta per titolo o ingrediente...">
-    <button id="btnCerca">Cerca</button>
-    <button id="btnAggiungi">Aggiungi Ricetta</button>
-    <button id="Accedi">Accedi</button>
+<header class="site-header">
+    <div class="header-center">
+        <div class="brand">
+          <img src="Immagini/Logo.png" alt="Logo" class="site-logo site-logo-large">
+          <h1 class="site-title">Ricettario</h1>
+        </div>
+        <div class="header-buttons">
+            <button id="Accedi" class="hdr-btn">Accedi</button>
+            <button id="btnAggiungi" class="hdr-btn">Aggiungi Ricetta</button>
+        </div>
+    </div>
+</header>
+
+<div id="ricerca" class="home-search" style="margin-top: 32px;">
+        <input type="text" id="cercaTesto" placeholder="Cerca una ricetta per titolo o ingrediente...">
+        <button id="btnCerca" class="search-btn">Cerca</button>
 </div>
 
 <!-- Container per risultati di ricerca -->
